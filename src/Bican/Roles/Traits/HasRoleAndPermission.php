@@ -166,7 +166,7 @@ trait HasRoleAndPermission
 
         return $permissionModel::select(['permissions.*', 'permission_role.created_at as pivot_created_at', 'permission_role.updated_at as pivot_updated_at'])
                 ->join('permission_role', 'permission_role.permission_id', '=', 'permissions.id')->join('roles', 'roles.id', '=', 'permission_role.role_id')
-                ->whereIn('roles.id', $this->getRoles()->lists('id')->toArray()) ->orWhere('roles.level', '<', $this->level())
+                ->whereIn('roles.id', $this->getRoles()->pluck('id')->toArray()) ->orWhere('roles.level', '<', $this->level())
                 ->groupBy(['permissions.id', 'pivot_created_at', 'pivot_updated_at']);
     }
 
@@ -248,7 +248,7 @@ trait HasRoleAndPermission
      */
     public function hasPermission($permission)
     {
-        return $this->getPermissions()->contains(function ($key, $value) use ($permission) {
+        return $this->getPermissions()->contains(function ($value) use ($permission) {
             return $permission == $value->id || Str::is($permission, $value->slug);
         });
     }
