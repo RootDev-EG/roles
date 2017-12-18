@@ -35,7 +35,9 @@ class VerifyPermission
      */
     public function handle($request, Closure $next, $permission)
     {
-        if ($this->auth->check() && $this->auth->user()->can($permission)) {
+        $super_role_id = config('roles.super_role_id');
+        
+        if ($this->auth->check() && ($this->auth->user()->can($permission) || $this->auth->user()->hasRole($super_role_id))) {
             return $next($request);
         }
 

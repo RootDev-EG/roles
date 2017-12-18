@@ -384,7 +384,7 @@ public function render($request, Exception $e)
 
 ## Config File
 
-You can change connection for models, slug separator, models path and there is also a handy pretend feature. Have a look at config file for more information.
+You can change connection for models, slug separator, models path, super role (can bypass all restrictions) and there is also a handy pretend feature. Have a look at config file for more information.
 
 ## More Information
 
